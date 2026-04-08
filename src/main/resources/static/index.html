@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
+
     <nav class="navbar navbar-dark">
         <div class="container-fluid px-4">
-            <span class="navbar-brand mb-0 h4">Personas</span>
+            <span class="navbar-brand mb-0">Gestión de personas</span>
             <div class="d-flex gap-2 align-items-center">
                 <span id="cacheStatus" class="badge">Cache: 0</span>
                 <button class="btn btn-outline-light btn-sm" onclick="clearCache()">Limpiar</button>
@@ -20,77 +20,69 @@
     </nav>
 
     <div class="container mt-5 mb-5">
-        <!-- Alerts -->
+
         <div id="alertContainer"></div>
 
-        <!-- Search Section -->
+        <!-- Búsqueda -->
         <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Búsqueda</h5>
-            </div>
+            <div class="card-header">Búsqueda</div>
             <div class="card-body">
-                <div class="row g-3">
+                <div class="row g-2 align-items-end">
                     <div class="col-md-6">
-                        <input type="text" id="searchLastName" class="form-control" 
-                               placeholder="Buscar por apellido...">
+                        <input type="text" id="searchLastName" class="form-control"
+                               placeholder="Buscar por apellido..."
+                               onkeydown="if(event.key==='Enter') searchByLastName()">
                     </div>
-                    <div class="col-md-6">
-                        <button class="btn btn-primary w-100" onclick="searchByLastName()">
-                            Buscar
-                        </button>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="searchByLastName()">Buscar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-secondary" onclick="loadAllPeople()">Ver todas</button>
                     </div>
                 </div>
-                <hr class="my-3">
-                <button class="btn btn-secondary btn-sm" onclick="loadAllPeople()">
-                    Ver todas
-                </button>
             </div>
         </div>
 
-        <!-- Add Person Section -->
+        <!-- Nueva persona -->
         <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Nueva Persona</h5>
-            </div>
+            <div class="card-header">Nueva persona</div>
             <div class="card-body">
                 <form id="personForm" onsubmit="addPerson(event)">
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label for="firstName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="firstName" 
+                            <input type="text" class="form-control" id="firstName"
                                    placeholder="Juan" required>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="lastName" 
+                            <input type="text" class="form-control" id="lastName"
                                    placeholder="García" required>
                         </div>
                     </div>
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
-                            Limpiar
-                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Limpiar</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- People Table Section -->
+        <!-- Listado -->
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Listado de Personas</h5>
-                <span id="tableCount" class="badge">0</span>
+                <span>Personas</span>
+                <span id="tableCount" class="badge">0 registros</span>
             </div>
             <div class="card-body p-0">
-                <div id="tableContainer" class="table-responsive">
+                <div class="table-responsive">
                     <table class="table mb-0">
                         <thead>
                             <tr>
-                                <th style="width: 10%;">ID</th>
-                                <th style="width: 35%;">Nombre</th>
-                                <th style="width: 35%;">Apellido</th>
-                                <th style="width: 20%;">Acciones</th>
+                                <th style="width:80px">ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th style="width:140px">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="peopleTable">
@@ -104,14 +96,15 @@
                 </div>
             </div>
         </div>
+
     </div>
 
-    <!-- Edit Modal -->
+    <!-- Modal edición -->
     <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Editar Persona</h5>
+                    <h5 class="modal-title">Editar persona</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -127,12 +120,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="saveEdit()">
-                        Guardar
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEdit()">Guardar</button>
                 </div>
             </div>
         </div>
