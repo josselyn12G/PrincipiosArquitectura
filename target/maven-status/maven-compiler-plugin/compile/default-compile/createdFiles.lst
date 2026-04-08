@@ -1,0 +1,6 @@
+com\example\accessingdatarest\Person.class
+com\example\accessingdatarest\Cache.class
+com\example\accessingdatarest\PersonRepository.class
+com\example\accessingdatarest\AccessingDataRestApplication.class
+com\example\accessingdatarest\PersonCache.class
+com\example\accessingdatarest\PersonController.class
