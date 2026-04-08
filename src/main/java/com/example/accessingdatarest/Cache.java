@@ -3,55 +3,58 @@ package com.example.accessingdatarest;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Caché genérico singleton thread-safe.
- * Puede almacenar cualquier tipo de dato con clave y valor genéricos.
- * @param <K> Tipo de la clave
- * @param <V> Tipo del valor
- */
-public class Cache<K, V> {
-    // Crear una instancia privada estática de la clase Cache
-	private static Cache<?, ?> localCache; 
-	// Crear un mapa para almacenar los datos en caché
-	private final Map<K, V> keymap;
-    // Hacer el constructor privado para evitar que se puedan crear instancias desde fuera de la clase
-	private Cache() {
-		keymap = new HashMap<>();
-	} 
-    // Método público estático para obtener la instancia de la clase Cache
-	@SuppressWarnings("unchecked")
-	public static <K, V> Cache<K, V> getCache() { 
+// Clase Singleton para gestionar el caché de objetos Person
+public class Cache {
+
+    // Instancia única del caché
+    private static Cache localCache;
+
+    // Estructura de almacenamiento: ID - Objeto Person
+    private Map<Long, Person> cacheMap;
+
+    // Constructor privado
+    private Cache() {
+        this.cacheMap = new HashMap<>();
+    }
+
+    // Método para obtener la instancia única (Singleton)
+    public static Cache getCache() {
         // Si no existe una instancia, crear una nueva
-		if (localCache == null) { 
+        if (localCache == null) {
             // Crear una nueva instancia de la clase Cache
-			localCache = new Cache<>();
-		}
+            localCache = new Cache();
+        }
         // Devolver la instancia de la clase Cache
-		return (Cache<K, V>) localCache;
-	}
-	
-	// Método público sincronizado para almacenar un valor en la caché
-	public synchronized void setCache(K key, V value) {
-		keymap.put(key, value);
-	}
-	// Método público sincronizado para obtener un valor de la caché dado una clave
-	public synchronized V getCacheValue(K key) {
-		return keymap.get(key);
-	}
-	// Método público sincronizado para obtener todas las claves
-	public synchronized Map<K, V> getAllCache() {
-		return new HashMap<>(keymap);
-	}
-	// Método público sincronizado para limpiar toda la caché
-	public synchronized void clearCache() {
-		keymap.clear();
-	}
-	// Método público sincronizado para eliminar una clave específica
-	public synchronized void removeCache(K key) {
-		keymap.remove(key);
-	}
-	// Método público sincronizado para obtener el tamaño del caché
-	public synchronized int getCacheSize() {
-		return keymap.size();
-	}
+        return localCache;
+    }
+
+    // Guardar una persona en caché
+    public void setCache(Long id, Person person) {
+        cacheMap.put(id, person);
+    }
+
+    // Obtener una persona desde caché
+    public Person getPerson(Long id) {
+        return cacheMap.get(id);
+    }
+
+    // Eliminar una persona del caché
+    public void delete(Long id) {
+        cacheMap.remove(id);
+    }
+
+    // Limpiar todo el caché
+    public void deleteAll() {
+        cacheMap.clear();
+    }
+
+    // Obtener todos los elementos en caché
+    public Map<Long, Person> getAllCached() {
+        return cacheMap;
+    }
+
+    // Obtener tamaño del caché
+    public int getCacheSize() {
+        return cacheMap.size();
+    }
 }
